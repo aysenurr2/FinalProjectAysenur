@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
-
+﻿using FinalProjectAysenur.Services;
+using FinalProjectAysenur.ViewModels;
+using Microsoft.Extensions.Logging;
+using FinalProjectAysenur.Views;
 namespace FinalProjectAysenur
 {
     public static class MauiProgram
@@ -18,7 +20,16 @@ namespace FinalProjectAysenur
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+        
+            // Servislerin Kaydı
+            builder.Services.AddSingleton<Services.DatabaseService>();
+            builder.Services.AddSingleton<ViewModels.PetViewModel>();
+            builder.Services.AddTransient<Views.MainPage>();
 
+
+            // Sayfaların Kaydı
+            builder.Services.AddTransient<Views.MainPage>();
+            builder.Services.AddTransient<Views.AddPetPage>();
             return builder.Build();
         }
     }
