@@ -1,8 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FinalProjectAysenur.ViewModels"
+             xmlns:model="clr-namespace:FinalProjectAysenur.Models"
              x:Class="FinalProjectAysenur.Views.MainPage" 
-             Title="Hasta Listesi">
+             Title="Hasta Listesi"
+             x:DataType="vm:PetViewModel">
     <Grid RowDefinitions="Auto, *" Padding="20">
 
         <HorizontalStackLayout Grid.Row="0" Spacing="20" HorizontalOptions="Center" Margin="0,0,0,20">
@@ -19,8 +22,16 @@
 
         <CollectionView Grid.Row="1" ItemsSource="{Binding Pets}" EmptyView="Henüz kayıtlı hasta bulunmuyor.">
             <CollectionView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="model:Pet">
                     <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem Text="Sil"
+                                           BackgroundColor="Red"
+                                           Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PetViewModel}}, Path=DeletePetCommand}"
+                                           CommandParameter="{Binding .}"/>
+                            </SwipeItems>
+                        </SwipeView.RightItems>
                         <Frame Margin="0,5" BorderColor="LightGray" CornerRadius="10" Padding="15">
                             <HorizontalStackLayout Spacing="15">
                                 <Ellipse Fill="LightSteelBlue" WidthRequest="40" HeightRequest="40"/>
@@ -28,6 +39,7 @@
                                 <VerticalStackLayout VerticalOptions="Center">
                                     <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="18"/>
                                     <Label Text="{Binding Species}" FontSize="14" TextColor="Gray"/>
+                                    <Label Text="{Binding Symptom}" FontSize="12" TextColor="SlateGray" FontAttributes="Italic"/>
                                 </VerticalStackLayout>
 
                                 <Label Text="{Binding Age, StringFormat='{0} Yaşında'}" 

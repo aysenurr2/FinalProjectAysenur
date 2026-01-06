@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FinalProjectAysenur.ViewModels"
+             xmlns:model="clr-namespace:FinalProjectAysenur.Models"
+             x:Class="FinalProjectAysenur.Views.OwnerPage"
+             Title="Sahipler"
+             x:DataType="vm:OwnerViewModel">
+    <Grid RowDefinitions="Auto, *">
+        <!-- Add Section -->
+        <Frame Grid.Row="0" Margin="10" Padding="15" CornerRadius="10" BackgroundColor="#F5F5FA">
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Yeni Sahip Ekle" FontAttributes="Bold" FontSize="16" TextColor="DarkSlateBlue"/>
+                <Entry Placeholder="Ad Soyad" Text="{Binding FullName}" />
+                <Entry Placeholder="Telefon" Keyboard="Telephone" Text="{Binding Phone}" />
+                <Entry Placeholder="E-posta" Keyboard="Email" Text="{Binding Email}" />
+                <Button Text="Kaydet" Command="{Binding SaveOwnerCommand}" BackgroundColor="DarkSlateBlue" TextColor="White"/>
+            </VerticalStackLayout>
+        </Frame>
+
+        <!-- List Section -->
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Owners}" Margin="10">
+            <CollectionView.EmptyView>
+                <Label Text="Henüz kayıtlı sahip yok." HorizontalOptions="Center" VerticalOptions="Center"/>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Owner">
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem Text="Sil" BackgroundColor="Red"
+                                           Command="{Binding Source={RelativeSource AncestorType={x:Type vm:OwnerViewModel}}, Path=DeleteOwnerCommand}"
+                                           CommandParameter="{Binding .}"/>
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Frame Margin="0,5" Padding="10" CornerRadius="8" BorderColor="LightGray">
+                            <StackLayout>
+                                <Label Text="{Binding FullName}" FontAttributes="Bold" FontSize="16"/>
+                                <Label Text="{Binding Phone}" TextColor="Gray"/>
+                                <Label Text="{Binding Email}" TextColor="SlateGray" FontSize="12"/>
+                            </StackLayout>
+                        </Frame>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

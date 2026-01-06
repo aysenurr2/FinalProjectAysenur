@@ -2,10 +2,10 @@ using FinalProjectAysenur.ViewModels;
 
 namespace FinalProjectAysenur.Views
 {
-    public partial class AddPetPage : ContentPage
+    public partial class TreatmentPage : ContentPage
     {
-        private readonly PetViewModel _vm;
-        public AddPetPage(PetViewModel vm)
+        private readonly TreatmentViewModel _vm;
+        public TreatmentPage(TreatmentViewModel vm)
         {
             InitializeComponent();
             _vm = vm;
@@ -15,8 +15,8 @@ namespace FinalProjectAysenur.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            if (_vm.LoadOwnersCommand.CanExecute(null))
-                _vm.LoadOwnersCommand.Execute(null);
+            if(_vm.LoadDataCommand.CanExecute(null))
+                _vm.LoadDataCommand.Execute(null);
         }
     }
 }

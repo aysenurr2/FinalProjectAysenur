@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FinalProjectAysenur.ViewModels"
              x:Class="FinalProjectAysenur.Views.AddPetPage"
-             Title="Yeni Kayıt">
-    <VerticalStackLayout Padding="20" Spacing="10">
-        <Entry x:Name="PetNameEntry" Placeholder="Hayvan Adı" />
-        <Entry x:Name="SpeciesEntry" Placeholder="Tür (Kedi/Köpek)" />
-        <Button Text="Kaydet" Clicked="OnSaveClicked" />
+             Title="Yeni Kayıt"
+             x:DataType="vm:PetViewModel">
+    <VerticalStackLayout Padding="20" Spacing="15">
+        <Entry Placeholder="Hayvan Adı" Text="{Binding Name}" />
+        <Entry Placeholder="Tür (Kedi/Köpek)" Text="{Binding Species}" />
+        <Entry Placeholder="Yaş" Keyboard="Numeric" Text="{Binding Age}" />
+        <Entry Placeholder="Şikayet" Text="{Binding Symptom}" />
+
+        <Picker Title="Sahip Seç" 
+                ItemsSource="{Binding Owners}"
+                ItemDisplayBinding="{Binding FullName}"
+                SelectedItem="{Binding SelectedOwner}" />
+
+        <Button Text="Kaydet" 
+                Command="{Binding AddPetCommand}"
+                BackgroundColor="DarkSlateBlue"
+                TextColor="White"
+                CornerRadius="10"/>
     </VerticalStackLayout>
 </ContentPage>

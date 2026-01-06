@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FinalProjectAysenur.ViewModels"
+             xmlns:model="clr-namespace:FinalProjectAysenur.Models"
+             x:Class="FinalProjectAysenur.Views.AppointmentPage"
+             Title="Randevular"
+             x:DataType="vm:AppointmentViewModel">
+    
+    <Grid RowDefinitions="Auto, Auto, *">
+        
+        <Frame Grid.Row="0" Margin="10" Padding="10" BackgroundColor="#E8EAF6" CornerRadius="10">
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Label Text="📅 Tarih:" VerticalOptions="Center" FontAttributes="Bold"/>
+                <DatePicker Date="{Binding SelectedDate}" TextColor="Black" BackgroundColor="Transparent"/>
+                <Button Text="Bugün" 
+                        Command="{Binding GoToTodayCommand}" 
+                        FontSize="12" 
+                        HeightRequest="35" 
+                        Padding="10,0" 
+                        BackgroundColor="DarkSlateBlue" 
+                        TextColor="White"/>
+            </HorizontalStackLayout>
+        </Frame>
+
+        <Frame Grid.Row="1" Margin="10,5" Padding="15" CornerRadius="10" BackgroundColor="#F5F5FA">
+            <VerticalStackLayout Spacing="10">
+                <Label Text="➕ Yeni Randevu (Seçili Tarih İçin)" FontSize="16" FontAttributes="Bold" TextColor="DarkSlateBlue"/>
+                
+                <Grid ColumnDefinitions="2*, 1*">
+                    <Picker Grid.Column="0" Title="Hasta Seç" 
+                            ItemsSource="{Binding Pets}" 
+                            ItemDisplayBinding="{Binding Name}" 
+                            SelectedItem="{Binding SelectedPet}"/>
+                    <TimePicker Grid.Column="1" Time="{Binding SelectedTime}" />
+                </Grid>
+
+                <Entry Placeholder="Sebep (Aşı, Kontrol vb.)" Text="{Binding Reason}" />
+                <Button Text="Randevu Kaydet" Command="{Binding SaveAppointmentCommand}" BackgroundColor="#009688" TextColor="White"/>
+            </VerticalStackLayout>
+        </Frame>
+
+        <CollectionView Grid.Row="2" ItemsSource="{Binding Appointments}" Margin="10">
+            <CollectionView.EmptyView>
+                <Label Text="Seçili tarihte randevu bulunmuyor." HorizontalOptions="Center" VerticalOptions="Center" TextColor="Gray"/>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Appointment">
+                     <Frame Margin="0,5" Padding="10" CornerRadius="8" BorderColor="LightGray" HasShadow="False">
+                        <Grid ColumnDefinitions="Auto, *, Auto">
+                            
+                            
+                            <Label Grid.Column="0" 
+                                   Text="{Binding TimeDisplay}" 
+                                   FontSize="18" 
+                                   FontAttributes="Bold" 
+                                   VerticalOptions="Center"
+                                   TextColor="{Binding StatusColor}"
+                                   Margin="0,0,15,0"/>
+
+                            
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                <Label Text="{Binding PetName}" FontAttributes="Bold" FontSize="16" TextColor="{Binding StatusColor}"/>
+                                <Label Text="{Binding Reason}" FontSize="14" TextColor="Gray"/>
+                            </VerticalStackLayout>
+
+                            
+                            <Button Grid.Column="2"
+                                    Text="İptal" 
+                                    FontSize="10" 
+                                    HeightRequest="30" 
+                                    Padding="5,0" 
+                                    BackgroundColor="#FFCDD2" 
+                                    TextColor="Red"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AppointmentViewModel}}, Path=CancelAppointmentCommand}"
+                                    CommandParameter="{Binding .}">
+                                <Button.Triggers>
+                                    <DataTrigger TargetType="Button" Binding="{Binding IsCancelled}" Value="True">
+                                        <Setter Property="IsVisible" Value="False"/>
+                                    </DataTrigger>
+                                </Button.Triggers>
+                            </Button>
+                            
+                            <Label Grid.Column="2" 
+                                   Text="İPTAL" 
+                                   TextColor="Red" 
+                                   FontAttributes="Bold" 
+                                   FontSize="12" 
+                                   VerticalOptions="Center"
+                                   IsVisible="False">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsCancelled}" Value="True">
+                                        <Setter Property="IsVisible" Value="True"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

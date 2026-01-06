@@ -22,14 +22,25 @@ namespace FinalProjectAysenur
 #endif
         
             // Servislerin Kaydı
-            builder.Services.AddSingleton<Services.DatabaseService>();
-            builder.Services.AddSingleton<ViewModels.PetViewModel>();
-            builder.Services.AddTransient<Views.MainPage>();
+            builder.Services.AddSingleton<DatabaseService>();
 
+            // ViewModels
+            builder.Services.AddTransient<PetViewModel>();
+            builder.Services.AddTransient<LoginViewModel>();
+            builder.Services.AddTransient<OwnerViewModel>();
+            builder.Services.AddTransient<AppointmentViewModel>();
+            builder.Services.AddTransient<TreatmentViewModel>();
+            builder.Services.AddTransient<FinanceViewModel>();
 
             // Sayfaların Kaydı
-            builder.Services.AddTransient<Views.MainPage>();
-            builder.Services.AddTransient<Views.AddPetPage>();
+            builder.Services.AddTransient<MainPage>();
+            builder.Services.AddTransient<AddPetPage>();
+            builder.Services.AddTransient<LoginPage>();
+            builder.Services.AddTransient<OwnerPage>();
+            builder.Services.AddTransient<AppointmentPage>();
+            builder.Services.AddTransient<TreatmentPage>();
+            builder.Services.AddTransient<FinancePage>();
+
             return builder.Build();
         }
     }

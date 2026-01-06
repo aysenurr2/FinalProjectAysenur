@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FinalProjectAysenur.ViewModels"
+             xmlns:model="clr-namespace:FinalProjectAysenur.Models"
+             x:Class="FinalProjectAysenur.Views.FinancePage"
+             Title="Kasa &amp; Finans">
+    
+    
+    <Grid RowDefinitions="*, Auto" Padding="10">
+        
+        <CollectionView Grid.Row="0" ItemsSource="{Binding Finances}">
+            <CollectionView.Header>
+                <Grid ColumnDefinitions="2*, 2*, 2*, 2*" Padding="10" BackgroundColor="#E0E0E0">
+                    <Label Grid.Column="0" Text="TARİH" FontAttributes="Bold" FontSize="12"/>
+                    <Label Grid.Column="1" Text="SAHİP" FontAttributes="Bold" FontSize="12"/>
+                    <Label Grid.Column="2" Text="HASTA" FontAttributes="Bold" FontSize="12"/>
+                    <Label Grid.Column="3" Text="TUTAR" FontAttributes="Bold" HorizontalOptions="End" FontSize="12"/>
+                </Grid>
+            </CollectionView.Header>
+            <CollectionView.EmptyView>
+                <Label Text="Kayıt bulunamadı." HorizontalOptions="Center" VerticalOptions="Center"/>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Finance">
+                    <Grid ColumnDefinitions="2*, 2*, 2*, 2*" Padding="10" BackgroundColor="White">
+                        <Label Grid.Column="0" Text="{Binding Date, StringFormat='{0:dd.MM.yy}'}" VerticalOptions="Center" FontSize="12"/>
+                        <Label Grid.Column="1" Text="{Binding OwnerName}" VerticalOptions="Center" FontSize="12"/>
+                        <Label Grid.Column="2" Text="{Binding PetName}" VerticalOptions="Center" FontSize="12"/>
+                        <Label Grid.Column="3" Text="{Binding Amount, StringFormat='{0:C}'}" VerticalOptions="Center" HorizontalOptions="End" FontAttributes="Bold" TextColor="Green"/>
+                        
+                        
+                        <BoxView Grid.ColumnSpan="4" VerticalOptions="End" HeightRequest="1" Color="#F0F0F0"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        
+        <Frame Grid.Row="1" BackgroundColor="Black" Padding="15" Margin="0,10,0,0" CornerRadius="10">
+            <Grid ColumnDefinitions="*, Auto">
+                <Label Text="TOPLAM KASA:" TextColor="White" FontAttributes="Bold" FontSize="18"/>
+                <Label Grid.Column="1" Text="{Binding TotalIncome, StringFormat='{0:C}'}" TextColor="#69F0AE" FontAttributes="Bold" FontSize="20"/>
+            </Grid>
+        </Frame>
+    </Grid>
+</ContentPage>

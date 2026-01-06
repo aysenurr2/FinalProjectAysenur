@@ -1,31 +1,28 @@
 ﻿using FinalProjectAysenur.ViewModels;
+using FinalProjectAysenur.Views;
 
-namespace FinalProjectAysenur.Views;
-
-public partial class MainPage : ContentPage
+namespace FinalProjectAysenur.Views
 {
-    private readonly PetViewModel _viewModel;
-
-    
-    public MainPage(PetViewModel viewModel)
+    public partial class MainPage : ContentPage
     {
-        InitializeComponent();
-        _viewModel = viewModel;
+        private readonly PetViewModel _viewModel;
 
-        BindingContext = _viewModel;
-    }
+        public MainPage(PetViewModel viewModel)
+        {
+            InitializeComponent();
+            _viewModel = viewModel;
+            BindingContext = _viewModel;
+        }
 
-    
-    protected override async void OnAppearing()
-    {
-        base.OnAppearing();
-       
-        await _viewModel.LoadPetsAsync();
-    }
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await _viewModel.LoadPetsAsync();
+        }
 
-    private async void OnAddPetClicked(object sender, EventArgs e)
-    {
-   
-        await Navigation.PushAsync(new AddPetPage(new Services.DatabaseService()));
+        private async void OnAddPetClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync(nameof(AddPetPage));
+        }
     }
 }
