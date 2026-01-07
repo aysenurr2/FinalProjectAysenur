@@ -7,13 +7,10 @@ namespace FinalProjectAysenur.Services
     {
         private SQLiteAsyncConnection _database;
 
-        // Veritabanı başlatma (Tabloları oluşturma)
-        // Bu metot her veritabanı işleminden önce çağrılır, bağlantı yoksa açar.
         async Task Init()
         {
             if (_database is not null) return;
 
-            // Veritabanı dosyasının yolu (Cihazın yerel uygulama klasörü)
             var dbPath = Path.Combine(FileSystem.AppDataDirectory, "VetDb.db3");
             _database = new SQLiteAsyncConnection(dbPath);
 
@@ -48,7 +45,6 @@ namespace FinalProjectAysenur.Services
             }
         }
 
-        // --- Pet (Soft Delete & Filter) ---
         public async Task<List<Pet>> GetPetsAsync()
         {
             await Init();
@@ -69,7 +65,6 @@ namespace FinalProjectAysenur.Services
             return await _database.UpdateAsync(pet);
         }
 
-        // --- Owner (Soft Delete & Filter) ---
         public async Task<List<Owner>> GetOwnersAsync()
         {
             await Init();
@@ -112,7 +107,6 @@ namespace FinalProjectAysenur.Services
 
         // --- Treatment & Finance Logic ---
         
-        // Save Treatment and automatically add Finance record
         public async Task ProcessTreatmentAsync(Treatment treatment)
         {
             await Init();
@@ -131,14 +125,12 @@ namespace FinalProjectAysenur.Services
             await _database.InsertAsync(finance);
         }
 
-        // Finance List (Read Only)
         public async Task<List<Finance>> GetFinancesAsync()
         {
              await Init();
              return await _database.Table<Finance>().OrderByDescending(f => f.Date).ToListAsync();
         }
 
-        // Just in case we need to list treatments
         public async Task<List<Treatment>> GetTreatmentsAsync()
         {
             await Init();

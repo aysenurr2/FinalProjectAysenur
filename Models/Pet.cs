@@ -12,10 +12,10 @@ namespace FinalProjectAysenur.Models
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Species { get; set; } // Cins/Tür
+        public string Species { get; set; } 
         public int Age { get; set; }
-        public string Symptom { get; set; } // Şikayet
-        public int OwnerId { get; set; } // İlişki: Hangi sahibe ait?
+        public string Symptom { get; set; } 
+        public int OwnerId { get; set; } 
         public bool IsActive { get; set; } = true;
     }
 }

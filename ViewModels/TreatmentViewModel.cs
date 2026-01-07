@@ -70,7 +70,6 @@ namespace FinalProjectAysenur.ViewModels
             if (item == null) return;
             item.IsSelected = !item.IsSelected;
             
-            // Hack to trigger UI update since ServiceItem doesn't implement INPC
             var index = AvailableServices.IndexOf(item);
             if (index >= 0)
             {
@@ -114,13 +113,11 @@ namespace FinalProjectAysenur.ViewModels
 
             await _dbService.ProcessTreatmentAsync(treatment);
             
-            // Cleanup UI
             SelectedPet = null;
             Description = string.Empty;
             Date = DateTime.Now;
             foreach (var s in AvailableServices) s.IsSelected = false;
             
-            // Refresh list trick
             var temp = new List<ServiceItem>(AvailableServices);
             AvailableServices.Clear();
             foreach(var t in temp) AvailableServices.Add(t);

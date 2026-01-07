@@ -40,7 +40,6 @@ namespace FinalProjectAysenur.ViewModels
             set
             {
                 SetProperty(ref _selectedDate, value);
-                // When date changes, reload list
                 if(LoadAppointmentsCommand != null) 
                    ExecuteLoadAppointments().FireAndForgetSafeAsync();
             }
@@ -62,15 +61,12 @@ namespace FinalProjectAysenur.ViewModels
             IsBusy = true;
             try
             {
-                // 1. Load Pets for Helper Name
                 var petList = await _dbService.GetPetsAsync();
                 Pets.Clear();
                 foreach (var p in petList) Pets.Add(p);
 
-                // 2. Load Appointments
                 var allAppointments = await _dbService.GetAppointmentsAsync();
                 
-                // Filter by Selected Date (Ignore Time part for filtering date)
                 var filtered = allAppointments
                                 .Where(a => a.AppointmentDate.Date == SelectedDate.Date)
                                 .OrderBy(a => a.AppointmentDate) // Sort by time

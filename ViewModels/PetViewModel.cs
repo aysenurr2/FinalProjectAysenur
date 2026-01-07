@@ -7,16 +7,13 @@ namespace FinalProjectAysenur.ViewModels
 {
     public class PetViewModel : BaseViewModel
     {
-        // Veritabanı işlemlerini yürüten servis
         private readonly DatabaseService _dbService;
 
-        // ObservableCollection: UI tarafında listenin otomatik güncellenmesini sağlar.
-        // Listeye eleman eklendiğinde veya çıkarıldığında arayüz (View) haberdar olur.
+       
         public ObservableCollection<Pet> Pets { get; set; } = new();
         public ObservableCollection<Owner> Owners { get; set; } = new();
 
-        // New Pet Fields - Bu property'ler View'daki Entry'lere bağlanır (Binding).
-        // SetProperty metodu, değer değiştiğinde UI'ı uyarır (INotifyPropertyChanged).
+        // New Pet Fields 
         private string _name;    
         public string Name
         {
@@ -106,8 +103,6 @@ namespace FinalProjectAysenur.ViewModels
             await _dbService.SavePetAsync(pet);
             await LoadPetsAsync();
             
-            // Navigate back or Clear? Assuming navigation back or logic handled in view.
-            // Let's just clear for now.
             Name = string.Empty;
             Species = string.Empty;
             Age = 0;

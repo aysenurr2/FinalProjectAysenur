@@ -60,7 +60,6 @@ namespace FinalProjectAysenur.ViewModels
                         f.OwnerName = "-";
                     }
 
-                    // In simplified version, we assume everything is valid income
                     total += f.Amount;
                     Finances.Add(f);
                 }

@@ -12,7 +12,6 @@ namespace FinalProjectAysenur.Models
         public string Reason { get; set; }
         public bool IsCancelled { get; set; } = false;
 
-        // UI Helpers
         [Ignore]
         public string PetName { get; set; }
         [Ignore]

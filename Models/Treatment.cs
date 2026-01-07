@@ -8,9 +8,9 @@ namespace FinalProjectAysenur.Models
         public int Id { get; set; }
         public int PetId { get; set; }
         public DateTime Date { get; set; }
-        public string ServiceList { get; set; } // "Karma Aşı, Muayene"
+        public string ServiceList { get; set; } 
         public decimal TotalAmount { get; set; }
-        public string Description { get; set; } // Optional Note
+        public string Description { get; set; } 
 
         // UI Helpers
         [Ignore]
